@@ -1,0 +1,37 @@
+body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(to right, #fbc2eb, #abc1ee);
+margin: 0;
+height: 100vh;
+display: flex;
+align-items: center;
+.Kapsayici{
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10
+    rgba(0,0,0,0.2);
+    width: 3000px;
+    select, button{
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+    }
+    button{
+        background-color: #70c1b3;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+         background-color: #44bba4;
+    }
+    #sonuc {
+        margin-top: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+}
+}
