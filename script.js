@@ -33,7 +33,7 @@ function kitapOner()
     const sonuc = document.getElementById("sonuc");
     if(kitapListesi && kitapListesi.length > 0){
         const rastgele= Math.floor(Math.random()* kitapListesi.length);
-        sonuc.textContent='KİTAP ÖNERİSİ: ${ kitapListesi [rastgele] }';}
+        sonuc.textContent=`KİTAP ÖNERİSİ: ${ kitapListesi [rastgele] }`;}
     else{
         sonuc.textContent="Uygun Kitap Bulunamadı";
     }
