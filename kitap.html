@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yaşa Göre Kitap Öner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="kapsayici">
+    <h1>📖 Yaşa Göre Kitap Önerisi</h1>
+
+    <label for="tur">Kitap Türü:</label>
+    <select id="tur">
+      <option value="fantastik">Fantastik</option>
+      <option value="bilim">Bilim</option>
+      <option value="roman">Roman</option>
+      <option value="cocuk">Çocuk</option>
+    </select>
+
+    <label for="yas">Yaş Aralığı:</label>
+    <select id="yas">
+      <option value="8-14">8-14</option>
+      <option value="14-18">14-18</option>
+      <option value="18-25">18-25</option>
+      <option value="25+">25+ (Yetişkin)</option>
+    </select>
+
+    <button onclick="kitapOner()">📚 Kitap Öner</button>
+    <p id="sonuc"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
