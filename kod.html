@@ -1,14 +1,273 @@
-<html>
- <body>
-   <title>ÜÇ SİLAHŞÖRLER</title>
-<li>HTML</li>
-<li>PHP</li>
-<li>JS</li>
-<li>CSS</li>
-   <title>DİĞERLERİ</title>
-   <li>C++</li>
-   <li>DELPHİ</li>
-   <li>C#</li>
-   <li>MYSQL</li>
- </body>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Konu → Alt Başlıklar (Bağlantılı Kutular)</title>
+<style>
+  :root{
+    --bg1:#e3f2fd;   /* mavi çok açık */
+    --bg2:#fce4ec;   /* pembe çok açık */
+    --accent:#69db7c;/* yeşil */
+    --accent-dark:#2f9e44;
+    --text:#1f2937;
+  }
+  body{
+    margin:0; font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(120deg,var(--bg1),var(--bg2));
+    color:var(--text);
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+  }
+  .wrap{
+    width:min(1000px,94vw);
+    background:#fff; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,.08);
+    padding:22px;
+  }
+  header{
+    display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .left{
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  }
+  select{
+    padding:10px 12px; border-radius:12px; border:1px solid #d1d5db; font-size:15px;
+    background:#fff;
+  }
+  .topicTitle{
+    font-size:20px; font-weight:700;
+    padding:6px 12px; border-radius:12px; background:#f3f4f6;
+  }
+  button{
+    padding:12px 18px; border:0; border-radius:14px; font-weight:700; letter-spacing:.2px;
+    background:linear-gradient(135deg, var(--accent), #76e4f7);
+    color:#083344; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+  }
+  button:hover{ transform:translateY(-1px); box-shadow:0 14px 28px rgba(0,0,0,.12);}
+  button:active{ transform:translateY(0); }
+
+  /* Çizim alanı */
+  .stage{
+    position:relative; height:560px; border-radius:18px; background:#fafafa;
+    overflow:hidden; border:1px solid #e5e7eb;
+  }
+  svg.lines{
+    position:absolute; inset:0; pointer-events:none;
+  }
+
+  /* Kutular */
+  .node{
+    position:absolute; min-width:140px; max-width:220px; padding:12px 14px;
+    background:#ffffff; border:2px solid #c7f9cc; border-radius:16px;
+    box-shadow:0 8px 18px rgba(31,41,55,.08);
+    text-align:center; font-weight:700;
+  }
+  .node.main{
+    background:linear-gradient(135deg,#c0f5d2,#d7fff3);
+    border-color:#86efac;
+  }
+  .pill{
+    display:inline-block; margin-top:6px; font-size:12px; font-weight:600;
+    color:#1d4ed8; background:#dbeafe; border-radius:999px; padding:4px 8px;
+  }
+
+  /* Çizgi stili */
+  .edge{
+    stroke:url(#grad); stroke-width:2.5; fill:none;
+  }
+
+  /* Küçük ekran iyileştirmeleri */
+  @media (max-width:640px){
+    .stage{ height:520px; }
+    .node{ min-width:120px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="left">
+        <label for="konuSec"><strong>Konu:</strong></label>
+        <select id="konuSec">
+          <option value="Web Tasarım">Web Tasarım</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="PHP">PHP</option>
+          <option value="Okuma Alışkanlığı">Okuma Alışkanlığı</option>
+        </select>
+        <span class="topicTitle" id="topicTitle">Web Tasarım</span>
+      </div>
+      <button id="gosterBtn">Alt Başlıkları Göster</button>
+    </header>
+
+    <div class="stage" id="stage">
+      <!-- Çizgiler için SVG -->
+      <svg class="lines" viewBox="0 0 1000 560" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="grad" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#60a5fa"/>
+            <stop offset="100%" stop-color="#fb7185"/>
+          </linearGradient>
+        </defs>
+        <g id="edges"></g>
+      </svg>
+      <!-- Kutular JS ile eklenecek -->
+    </div>
+  </div>
+
+<script>
+/* ------- VERİ: konu → alt başlıklar ------- */
+const DATA = {
+  "Web Tasarım": [
+    "HTML Yapısı",
+    "CSS (Flex & Grid)",
+    "Renk Paletleri",
+    "Erişilebilirlik",
+    "Responsive Tasarım",
+    "Bileşen Kütüphaneleri"
+  ],
+  "JavaScript": [
+    "DOM Manipülasyonu",
+    "Fetch API",
+    "Olay Yönetimi",
+    "Modüller",
+    "Async/Await",
+    "LocalStorage"
+  ],
+  "PHP": [
+    "Form İşleme",
+    "PDO & MySQL",
+    "Routing Temelleri",
+    "Session & Auth",
+    "REST API",
+    "Şablonlama"
+  ],
+  "Okuma Alışkanlığı": [
+    "Günlük Hedef",
+    "Tür Seçimi",
+    "Not Alma",
+    "Özetleme",
+    "Takip Tablosu",
+    "Paylaşım/Blog"
+  ]
+};
+
+/* ------- Yardımcı: Eleman merkezi -------- */
+function centerOf(el){ 
+  const r = el.getBoundingClientRect();
+  const s = document.getElementById('stage').getBoundingClientRect();
+  return { x: r.left - s.left + r.width/2, y: r.top - s.top + r.height/2 };
+}
+
+/* ------- Sahneyi çiz ------- */
+function render(topic){
+  const stage = document.getElementById('stage');
+  const edges = document.getElementById('edges');
+
+  // Önceki içerikleri temizle
+  [...stage.querySelectorAll('.node')].forEach(n=>n.remove());
+  edges.innerHTML = '';
+
+  // Merkez konum (stage boyutuna göre)
+  const W = stage.clientWidth;
+  const H = stage.clientHeight;
+  const cx = W/2, cy = H/2;
+
+  // Merkez (ana konu) düğümü
+  const main = document.createElement('div');
+  main.className = 'node main';
+  main.style.left = (cx - 90) + 'px';
+  main.style.top  = (cy - 30) + 'px';
+  main.innerHTML = `${topic}<div class="pill">Ana konu</div>`;
+  stage.appendChild(main);
+
+  // Alt başlıklar
+  const subs = DATA[topic] || [];
+  const radius = Math.min(W,H)/2 - 90; // daire yarıçapı
+  const nodes = []; // alt düğümler
+
+  subs.forEach((title, i) => {
+    const angle = (i / subs.length) * Math.PI * 2 - Math.PI/2; // tepedEN başla
+    const x = cx + radius * Math.cos(angle);
+    const y = cy + radius * Math.sin(angle);
+
+    const node = document.createElement('div');
+    node.className = 'node';
+    node.textContent = title;
+
+    // ortalamak için ~ kutu boyutu varsayımı
+    node.style.left = (x - 85) + 'px';
+    node.style.top  = (y - 26) + 'px';
+
+    stage.appendChild(node);
+    nodes.push(node);
+  });
+
+  // Çizgiler: ana konu → her alt başlık
+  nodes.forEach(n => {
+    const a = centerOf(main);
+    const b = centerOf(n);
+    addLine(a,b);
+  });
+
+  // Çizgiler: alt başlıklar kendi aralarında daire şeklinde birbirine bağlansın
+  for(let i=0;i<nodes.length;i++){
+    const a = centerOf(nodes[i]);
+    const b = centerOf(nodes[(i+1)%nodes.length]);
+    addLine(a,b, 0.35); // daha ince/şeffaf
+  }
+
+  // Basit hover etkileşimi: alt düğüme gelince kalın bağ çiz
+  nodes.forEach(n=>{
+    n.addEventListener('mouseenter', ()=>{
+      highlightLine(main, n, true);
+    });
+    n.addEventListener('mouseleave', ()=>{
+      highlightLine(main, n, false);
+    });
+  });
+
+  function addLine(a,b,opacity=1){
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+    line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+    line.setAttribute('class','edge');
+    line.style.opacity = opacity;
+    edges.appendChild(line);
+  }
+
+  function highlightLine(fromEl, toEl, on){
+    const a = centerOf(fromEl);
+    const b = centerOf(toEl);
+    // En yakın hattı bulup kalınlaştırmak yerine yeni bir overlay çizgi basitçe ekleyip kaldırıyoruz
+    const id = 'hl';
+    if(on){
+      const hl = document.createElementNS('http://www.w3.org/2000/svg','line');
+      hl.setAttribute('x1', a.x); hl.setAttribute('y1', a.y);
+      hl.setAttribute('x2', b.x); hl.setAttribute('y2', b.y);
+      hl.setAttribute('class','edge');
+      hl.setAttribute('id', id);
+      hl.style.strokeWidth = 4.5;
+      hl.style.opacity = 1;
+      edges.appendChild(hl);
+    }else{
+      const old = document.getElementById(id);
+      if(old) old.remove();
+    }
+  }
+}
+
+/* ------- UI bağlama ------- */
+const select = document.getElementById('konuSec');
+const title  = document.getElementById('topicTitle');
+document.getElementById('gosterBtn').addEventListener('click', ()=>{
+  const topic = select.value;
+  title.textContent = topic;   // butonun üstündeki konu başlığı güncellenir
+  render(topic);               // alt başlıklar çizilir
+});
+
+// İlk yüklemede varsayılan konuyu göster
+render(select.value);
+</script>
+</body>
 </html>
