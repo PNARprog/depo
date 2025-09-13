@@ -1,87 +1,103 @@
-<!DOCTYPE html>
-<html lang="tr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width-device-width, initial-scale=1.0">
-        <title>Pınar˙ın Penceresi</title>
-        <style>
-             body
-             {
-                font-family: Arial, sans-serif;
-                background: #66CDAA; /*açık yeşil*/
-                color:#2c3e50;
-                margin: 0; 
-                padding: 0;}
-            header
-            {
-                background-color: #d1e7dd;
-                text-align: center;
-                padding: 30px;
-                background-image: url('https://www.pexels.com/photo/mountain-at-night-under-a-starry-sky-1624496/');
-                background-repeat: no-repeat;
-                background-size: 150px;
-                background-position: right top;
-            }
-            h1{
-                color: #1a73e8;
-            }
-            h2{
-                color: #d63384;
-            }
-            section{
-                padding: 20px;
-                border-bottom: 1px solid #ccc;
-            }
-            ul{
-                list-style-type:circle ;
-                text-decoration: none;
-            }
-            a:hover{
-                text-decoration: underline;
-            }
-            footer{
-                text-align: center;
-                background-color: #d1e7dd;
-                padding: 15px;
-                font-size: 0.9em;
-                color: #444;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1> Merhaba, ben Pınar</h1>
-            <p>Web tasarımı üzerine çalışıyorum</p>
-        </header>
-        <section>
-            Bilgisayar programcılığı mezunuyum. Yeni dillerle kendimi geliştirip öğrendiklerimi burada paylaşıyorum.
-        </section>
-        <section>
-            <h2>İÇİNDEKİLER</h2>
-            <ul>
-                <li><a href="kitap.html">KİTAP</a></li>
-                <li><a href="kod.html">KOD</a></li>
-                <li><a href="foto.html">FOTOĞRAF</a></li>
-                <li><a href="dis.html">DIŞARI</a></li>
-                <li>....</li>
-            </ul>
-        </section>
-        <section>
-            <h2>Mutluluk en karanlık zamanlarda bile vardır yeter ki ışığı açmayı unutmayın...</h2>
-            <br>Albus Dumbledoor</br>
-            <blockquote>
+<!doctype html>
 
-            </blockquote>
-        </section>
-        <section>
-            <h2>İletişim</h2>
-            <ul>
-                <li><a href="mailto:pnarkepir@gmail.com">E-posta</a></li>
-            </ul>
-        </section>
-        <footer>
-            <p>&copy; 2025 Pınar Kepir. Tüm hakları saklıdır.</p>
-            <p>SAYFA GÜNCELLENDİ</p>
-        </footer>
-    </body>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pınar˙ın Penceresi</title>
+  <style>
+    :root{
+      --pink: #ff6fb1;
+      --blue: #6fb3ff;
+      --green: #6bffb3;
+      --glass: rgba(255,255,255,0.7);
+      --text: #1b1b1b;
+    }*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family: Inter, Roboto, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial; color:var(--text)}
+
+/* Genel düzen */
+.page{display:flex;flex-direction:column;min-height:100vh}
+
+/* Başlık */
+header{
+  padding:28px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  background: linear-gradient(90deg, var(--pink), var(--blue), var(--green));
+  color:white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+header .brand{font-weight:700;font-size:1.25rem;letter-spacing:0.4px}
+header nav a{color:rgba(255,255,255,0.95);text-decoration:none;margin-left:18px;font-weight:600}
+
+/* İçerik */
+main{
+  flex:1;
+  padding:48px 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.02) 100%), linear-gradient(120deg, var(--pink) 0%, var(--blue) 50%, var(--green) 100%);
+  /* hafif desen için */
+  background-blend-mode: multiply;
+  display:flex;align-items:center;justify-content:center;
+  min-height:420px;
+}
+.container{max-width:960px;width:100%;padding:28px;background:rgba(255,255,255,0.85);border-radius:16px;box-shadow:0 8px 30px rgba(22,22,22,0.08)}
+.hero{display:flex;gap:24px;align-items:center}
+.hero .text h1{margin:0;font-size:1.8rem}
+.hero .text p{margin-top:8px;color:#444}
+.hero .card{flex:0 0 220px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));text-align:center}
+
+/* Footer */
+footer{
+  padding:18px 20px;
+  background: linear-gradient(90deg, var(--green), var(--blue), var(--pink));
+  color:white;text-align:center;
+}
+
+/* Responsive */
+@media (max-width:720px){
+  .hero{flex-direction:column;align-items:stretch}
+  header{padding:20px}
+  .hero .card{width:100%}
+}
+
+/* Küçük yardımcı stiller */
+.btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700}
+.btn--primary{background:linear-gradient(90deg,var(--pink),var(--blue));color:white}
+.muted{color:#666;font-size:0.95rem}
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">PINAR KEPİR</div>
+      <nav>
+        <a href="#">Ana Sayfa</a>
+        <a href="#">Hakkında</a>
+        <a href="#">İletişim</a>
+      </nav>
+    </header><main>
+  <div class="container">
+    <div class="hero">
+      <div class="text">
+        <h1>SELAM!</h1>
+        <p class="muted">Burada bazı animasyon ve çeşitli proje denemelerimi görebilirsirsiniz. Okuduklarım, yazdıklarım ve çizdiklerim burada.</p>
+        <p style="margin-top:14px">
+          <a class="btn btn--primary" href="#">Keşfet</a>
+        </p>
+      </div>
+
+      <div class="card">
+        <strong>Hedef</strong>
+        <p class="muted" style="margin-top:8px">her mevsim 1 proje, her ay 3 kitap, her hafta 1 yazı, her gün 1 bilgi...</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 — PINAR KEPİR
+</footer>
+
+  </div>
+</body>
 </html>
