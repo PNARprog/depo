@@ -1,34 +1,127 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Yaşa Göre Kitap Öner</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitap Öneri Sayfası</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffc0cb, #98ff98, #add8e6);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 40px;
+  }
+
+  @keyframes gradient {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  h1 {
+    color: #444;
+    text-shadow: 1px 1px 3px #fff;
+  }
+
+  .container {
+    background: rgba(255,255,255,0.8);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+
+  button {
+    background-color: #ff69b4;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #32cd32;
+  }
+
+  #kitapSonuc {
+    margin-top: 25px;
+    font-size: 1.2em;
+    color: #006699;
+  }
+
+  .admin-panel {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  input {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+</style>
 </head>
 <body>
-  <div class="kapsayici">
-    <h1>📖 Yaşa Göre Kitap Önerisi</h1>
 
-    <label for="tur">Kitap Türü:</label>
-    <select id="tur">
-      <option value="fantastik">Fantastik</option>
-      <option value="bilim">Bilim</option>
-      <option value="roman">Roman</option>
-      <option value="cocuk">Çocuk</option>
-    </select>
+  <h1>📚 Kitap Öneri Sayfası</h1>
 
-    <label for="yas">Yaş Aralığı:</label>
-    <select id="yas">
-      <option value="8-14">8-14</option>
-      <option value="14-18">14-18</option>
-      <option value="18-25">18-25</option>
-      <option value="25+">25+ (Yetişkin)</option>
-    </select>
-
-    <button onclick="kitapOner()">📚 Kitap Öner</button>
-    <p id="sonuc"></p>
+  <div class="container">
+    <p>Butona basarak rastgele bir kitap önerisi al!</p>
+    <button onclick="rasgeleKitap()">Rastgele Kitap Göster</button>
+    <div id="kitapSonuc"></div>
   </div>
 
-  <script src="script.js"></script>
+  <div class="container admin-panel">
+    <h3>🛠️ Admin Kitap Ekle</h3>
+    <input type="text" id="kitapAdi" placeholder="Kitap Adı">
+    <input type="text" id="yazarAdi" placeholder="Yazar Adı">
+    <button onclick="kitapEkle()">Listeye Ekle</button>
+  </div>
+
+<script>
+  // Başlangıç kitap listesi (admin tarafından düzenlenebilir)
+  let kitaplar = [
+    {ad: "Kürk Mantolu Madonna", yazar: "Sabahattin Ali"},
+    {ad: "Simyacı", yazar: "Paulo Coelho"},
+    {ad: "Suç ve Ceza", yazar: "Fyodor Dostoyevski"},
+    {ad: "1984", yazar: "George Orwell"},
+    {ad: "Şeker Portakalı", yazar: "José Mauro de Vasconcelos"}
+  ];
+
+  function rasgeleKitap() {
+    if (kitaplar.length === 0) {
+      document.getElementById("kitapSonuc").innerHTML = "Henüz kitap yok.";
+      return;
+    }
+    const rastgeleIndex = Math.floor(Math.random() * kitaplar.length);
+    const secilen = kitaplar[rastgeleIndex];
+    document.getElementById("kitapSonuc").innerHTML = 
+      `📖 <strong>${secilen.ad}</strong><br>✍️ ${secilen.yazar}`;
+  }
+
+  function kitapEkle() {
+    const ad = document.getElementById("kitapAdi").value.trim();
+    const yazar = document.getElementById("yazarAdi").value.trim();
+    if (ad && yazar) {
+      kitaplar.push({ad, yazar});
+      alert(`"${ad}" adlı kitap listeye eklendi.`);
+      document.getElementById("kitapAdi").value = "";
+      document.getElementById("yazarAdi").value = "";
+    } else {
+      alert("Lütfen hem kitap hem yazar adını girin.");
+    }
+  }
+</script>
+
 </body>
 </html>
