@@ -119,6 +119,10 @@
   .acildi .sag {
     transform: perspective(800px) rotateY(100deg);
   }
+  /* Kapılar açıldığında tıklanabilirlik kalksın */
+.acildi {
+  pointer-events: none;
+}
 
   .acildi + .icerik {
     opacity: 1;
