@@ -61,6 +61,7 @@
   .admin-panel {
     margin-top: 40px;
     text-align: center;
+    display: none; /* Başta gizli */
   }
 
   input {
@@ -68,6 +69,10 @@
     margin: 5px;
     border-radius: 8px;
     border: 1px solid #ccc;
+  }
+
+  .giris-alani {
+    margin-top: 40px;
   }
 </style>
 </head>
@@ -81,11 +86,78 @@
     <div id="kitapSonuc"></div>
   </div>
 
-  <div class="container admin-panel">
+  <div class="container giris-alani">
+    <h3>🔐 Admin Girişi</h3>
+    <input type="password" id="sifre" placeholder="Şifreyi Gir">
+    <button onclick="adminGir()">Giriş</button>
+  </div>
+
+  <div class="container admin-panel" id="adminPanel">
     <h3>🛠️ Admin Kitap Ekle</h3>
     <input type="text" id="kitapAdi" placeholder="Kitap Adı">
     <input type="text" id="yazarAdi" placeholder="Yazar Adı">
     <button onclick="kitapEkle()">Listeye Ekle</button>
+  </div>
+
+<script>
+  // Varsayılan kitap listesi
+  let kitaplar = [
+    { ad: "1984", yazar: "George Orwell" },
+    { ad: "Kürk Mantolu Madonna", yazar: "Sabahattin Ali" },
+    { ad: "Hayvan Çiftliği", yazar: "George Orwell" },
+    { ad: "Simyacı", yazar: "Paulo Coelho" },
+    { ad: "Suç ve Ceza", yazar: "Fyodor Dostoyevski" }
+  ];
+
+  // LocalStorage'dan eklenmiş kitapları al
+  const kayitliKitaplar = JSON.parse(localStorage.getItem("kitaplar"));
+  if (kayitliKitaplar) {
+    kitaplar = kitaplar.concat(kayitliKitaplar);
+  }
+
+  // Rastgele kitap seçme
+  function rasgeleKitap() {
+    const rastgele = kitaplar[Math.floor(Math.random() * kitaplar.length)];
+    document.getElementById("kitapSonuc").innerHTML =
+      `📖 <b>${rastgele.ad}</b> - ${rastgele.yazar}`;
+  }
+
+  // Admin girişi kontrolü
+  function adminGir() {
+    const sifre = document.getElementById("sifre").value;
+    if (sifre === "2000") {
+      document.getElementById("adminPanel").style.display = "block";
+      document.querySelector(".giris-alani").style.display = "none";
+    } else {
+      alert("❌ Hatalı şifre!");
+    }
+  }
+
+  // Yeni kitap ekleme
+  function kitapEkle() {
+    const ad = document.getElementById("kitapAdi").value.trim();
+    const yazar = document.getElementById("yazarAdi").value.trim();
+
+    if (ad && yazar) {
+      const yeniKitap = { ad, yazar };
+      kitaplar.push(yeniKitap);
+
+      // LocalStorage'a kaydet
+      let mevcut = JSON.parse(localStorage.getItem("kitaplar")) || [];
+      mevcut.push(yeniKitap);
+      localStorage.setItem("kitaplar", JSON.stringify(mevcut));
+
+      alert("✅ Kitap eklendi!");
+      document.getElementById("kitapAdi").value = "";
+      document.getElementById("yazarAdi").value = "";
+    } else {
+      alert("Lütfen kitap adı ve yazar adını giriniz.");
+    }
+  }
+</script>
+
+</body>
+</html>
   </div>
 
 <script>
