@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📖 Okuma Günlüğüm</title>
+<title>Kitap Öneri Sayfası</title>
 <style>
   body {
     font-family: 'Poppins', sans-serif;
@@ -28,12 +28,116 @@
   }
 
   .container {
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.8);
     border-radius: 15px;
     padding: 30px;
-    max-width: 700px;
+    max-width: 500px;
     margin: 20px auto;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+
+  button {
+    background-color: #ff69b4;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #32cd32;
+  }
+
+  #kitapSonuc {
+    margin-top: 25px;
+    font-size: 1.2em;
+    color: #006699;
+  }
+
+  input {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .admin-panel {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+  <h1>📚 Kitap Öneri Sayfası</h1>
+
+  <div class="container">
+    <p>Butona basarak rastgele bir kitap önerisi al!</p>
+    <button onclick="rasgeleKitap()">Rastgele Kitap Göster</button>
+    <div id="kitapSonuc"></div>
+  </div>
+
+  <div class="container" id="sifreAlani">
+    <h3>🔐 Admin Girişi</h3>
+    <input type="password" id="adminSifre" placeholder="Şifreyi girin">
+    <button onclick="adminGirisi()">Giriş Yap</button>
+  </div>
+
+  <div class="container admin-panel" id="adminPanel">
+    <h3>🛠️ Admin Kitap Ekle</h3>
+    <input type="text" id="kitapAdi" placeholder="Kitap Adı">
+    <input type="text" id="yazarAdi" placeholder="Yazar Adı">
+    <button onclick="kitapEkle()">Listeye Ekle</button>
+  </div>
+
+<script>
+  // Kitap listesi localStorage’dan yüklenir
+  let kitaplar = JSON.parse(localStorage.getItem("kitaplar")) || [
+    { ad: "Kürk Mantolu Madonna", yazar: "Sabahattin Ali" },
+    { ad: "Simyacı", yazar: "Paulo Coelho" },
+    { ad: "1984", yazar: "George Orwell" }
+  ];
+
+  function rasgeleKitap() {
+    const rasgele = kitaplar[Math.floor(Math.random() * kitaplar.length)];
+    document.getElementById("kitapSonuc").innerHTML = 
+      `<strong>${rasgele.ad}</strong> - ${rasgele.yazar}`;
+  }
+
+  function kitapEkle() {
+    const ad = document.getElementById("kitapAdi").value.trim();
+    const yazar = document.getElementById("yazarAdi").value.trim();
+
+    if (ad && yazar) {
+      kitaplar.push({ ad, yazar });
+      localStorage.setItem("kitaplar", JSON.stringify(kitaplar));
+      alert("📘 Kitap eklendi!");
+      document.getElementById("kitapAdi").value = "";
+      document.getElementById("yazarAdi").value = "";
+    } else {
+      alert("Lütfen hem kitap hem yazar adını girin!");
+    }
+  }
+
+  function adminGirisi() {
+    const sifre = document.getElementById("adminSifre").value;
+    const adminPanel = document.getElementById("adminPanel");
+    const sifreAlani = document.getElementById("sifreAlani");
+
+    if (sifre === "2000") {
+      adminPanel.style.display = "block";
+      sifreAlani.style.display = "none";
+    } else {
+      alert("❌ Yanlış şifre!");
+    }
+  }
+</script>
+
+</body>
+</html>
   }
 
   button {
