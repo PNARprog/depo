@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kitap Öneri Sayfası</title>
+<title>📖 Okuma Günlüğüm</title>
 <style>
   body {
     font-family: 'Poppins', sans-serif;
@@ -28,10 +28,10 @@
   }
 
   .container {
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.85);
     border-radius: 15px;
     padding: 30px;
-    max-width: 500px;
+    max-width: 700px;
     margin: 20px auto;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
   }
@@ -52,13 +52,113 @@
     background-color: #32cd32;
   }
 
-  #kitapSonuc {
-    margin-top: 25px;
-    font-size: 1.2em;
-    color: #006699;
+  input, textarea {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 90%;
+    max-width: 400px;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 60px;
   }
 
   .admin-panel {
+    margin-top: 40px;
+    text-align: center;
+    display: none; /* Başta gizli */
+  }
+
+  .giris-alani {
+    margin-top: 40px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+  }
+
+  th, td {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  th {
+    background: rgba(255,255,255,0.6);
+    color: #333;
+  }
+
+  tr:hover {
+    background: rgba(255,255,255,0.5);
+  }
+
+  .bos {
+    color: #777;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+  <h1>📚 Okuma Günlüğüm</h1>
+
+  <!-- Görüntüleme Alanı -->
+  <div class="container" id="listeContainer">
+    <h3>Okuduğum Kitaplar</h3>
+    <table id="kitapTablosu">
+      <thead>
+        <tr>
+          <th>Kitap Adı</th>
+          <th>Yazar</th>
+          <th>Tarih</th>
+          <th>Notlar</th>
+        </tr>
+      </thead>
+      <tbody id="kitapListesi">
+        <tr><td colspan="4" class="bos">Henüz kayıtlı kitap yok.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Admin Girişi -->
+  <div class="container giris-alani" id="girisAlani">
+    <h3>🔐 Kitap Kaydı Ekle</h3>
+    <input type="password" id="sifre" placeholder="Şifreyi Gir">
+    <button onclick="adminGir()">Giriş</button>
+  </div>
+
+  <!-- Kitap Ekleme Paneli -->
+  <div class="container admin-panel" id="adminPanel">
+    <h3>📖 Yeni Kitap Kaydı</h3>
+    <input type="text" id="kitapAdi" placeholder="Kitap Adı"><br>
+    <input type="text" id="yazarAdi" placeholder="Yazar Adı"><br>
+    <input type="date" id="okumaTarihi"><br>
+    <textarea id="notlar" placeholder="Kitap hakkında notlarını buraya yaz..."></textarea><br>
+    <button onclick="kitapEkle()">Kaydı Ekle</button>
+  </div>
+
+<script>
+  // 📚 Kitapları saklamak için dizi (localStorage'dan yükleniyor)
+  let kitaplar = JSON.parse(localStorage.getItem("okunanKitaplar")) || [];
+
+  // Sayfa açıldığında kitapları tabloya yükle
+  window.onload = tabloyuGuncelle;
+
+  function tabloyuGuncelle() {
+    const tbody = document.getElementById("kitapListesi");
+    tbody.innerHTML = ""; // önce temizle
+
+    if (kitaplar.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="bos">Henüz kayıtlı kitap yok.</td></tr>`;
+      return;
+    }
+
+    kitaplar.forEach(kitap => {
+      const satir = document.c
     margin-top: 40px;
     text-align: center;
     display: none; /* Başta gizli */
