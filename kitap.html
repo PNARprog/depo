@@ -6,34 +6,112 @@
 <title>Kitap Öneri Sayfası</title>
 <style>
   body {
-    font-family: 'Poppins', sans-serif;
+    font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ffc0cb, #98ff98, #add8e6);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
-    color: #333;
     text-align: center;
-    margin: 0;
-    padding: 40px;
-  }
-
-  @keyframes gradient {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-  }
-
-  h1 {
-    color: #444;
-    text-shadow: 1px 1px 3px #fff;
-  }
-
-  .container {
-    background: rgba(255,255,255,0.8);
-    border-radius: 15px;
     padding: 30px;
-    max-width: 500px;
-    margin: 20px auto;
+  }
+
+  .kutu {
+    background: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 400px;
+    margin: 15px auto;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+
+  button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #32cd32;
+  }
+
+  input {
+    padding: 7px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin: 5px;
+  }
+
+  #adminPanel {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+  <h1>📚 Kitap Öneri Sayfası</h1>
+
+  <div class="kutu">
+    <p>Butona basarak rastgele bir kitap önerisi al!</p>
+    <button onclick="rasgeleKitap()">Rastgele Kitap Göster</button>
+    <p id="sonuc"></p>
+  </div>
+
+  <div class="kutu" id="sifreKutusu">
+    <h3>🔐 Admin Girişi</h3>
+    <input type="password" id="sifre" placeholder="Şifreyi girin">
+    <button onclick="sifreKontrol()">Giriş Yap</button>
+  </div>
+
+  <div class="kutu" id="adminPanel">
+    <h3>🛠️ Kitap Ekle</h3>
+    <input type="text" id="kitap" placeholder="Kitap Adı">
+    <input type="text" id="yazar" placeholder="Yazar Adı">
+    <button onclick="kitapEkle()">Ekle</button>
+  </div>
+
+<script>
+  // Başlangıç kitap listesi (varsa localStorage'dan yükle)
+  let kitaplar = JSON.parse(localStorage.getItem("kitaplar")) || [
+    {ad: "1984", yazar: "George Orwell"},
+    {ad: "Kürk Mantolu Madonna", yazar: "Sabahattin Ali"},
+    {ad: "Simyacı", yazar: "Paulo Coelho"}
+  ];
+
+  function rasgeleKitap() {
+    const rast = kitaplar[Math.floor(Math.random() * kitaplar.length)];
+    document.getElementById("sonuc").innerHTML =
+      `${rast.ad} - ${rast.yazar}`;
+  }
+
+  function sifreKontrol() {
+    const girilen = document.getElementById("sifre").value;
+    if (girilen === "2000") {
+      document.getElementById("adminPanel").style.display = "block";
+      document.getElementById("sifreKutusu").style.display = "none";
+    } else {
+      alert("Yanlış şifre!");
+    }
+  }
+
+  function kitapEkle() {
+    const kitap = document.getElementById("kitap").value.trim();
+    const yazar = document.getElementById("yazar").value.trim();
+
+    if (kitap && yazar) {
+      kitaplar.push({ad: kitap, yazar: yazar});
+      localStorage.setItem("kitaplar", JSON.stringify(kitaplar));
+      alert("Kitap eklendi!");
+      document.getElementById("kitap").value = "";
+      document.getElementById("yazar").value = "";
+    } else {
+      alert("Lütfen her iki alanı da doldurun!");
+    }
+  }
+</script>
+
+</body>
+</html>
   }
 
   button {
