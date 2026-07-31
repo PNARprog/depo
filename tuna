@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seni Seviyorum</title>
+    <!-- Script / El yazısı fontu için Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Arka planda sürekli süzülen küçük kalpler kabı -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <div class="heart-container">
+        <!-- Ana Kalp Vektörü (SVG) -->
+        <svg class="heart-svg" viewBox="0 0 500 500">
+            <path class="heart-path" d="M 250,450 
+                     C 250,450 40,300 40,160 
+                     C 40,80 100,30 175,30 
+                     C 225,30 245,60 250,80 
+                     C 255,60 275,30 325,30 
+                     C 400,30 460,80 460,160 
+                     C 460,300 250,450 250,450 Z" />
+        </svg>
+
+        <!-- Script / Kalın İtalik Yazı -->
+        <h1 class="love-text">Seni Seviyorum</h1>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
